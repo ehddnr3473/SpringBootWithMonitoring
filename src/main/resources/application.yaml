@@ -3,18 +3,23 @@ spring:
     name: monitoring
 
 server:
-  port: 9000
+  port: 8080
 
 management:
   server:
-    port: 9001
+    port: 9000
   endpoints:
     web:
       exposure:
-        include: health,info,metrics,beans
+        include: health,info,metrics,beans,prometheus
   info:
     env:
       enabled: true
+  prometheus:
+    metrics:
+      export:
+        enabled: true
+
 
 info:
   app:
