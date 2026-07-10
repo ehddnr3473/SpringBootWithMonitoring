@@ -1,3 +1,22 @@
 spring:
   application:
     name: monitoring
+
+server:
+  port: 9000
+
+management:
+  server:
+    port: 9001
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,beans
+  info:
+    env:
+      enabled: true
+
+info:
+  app:
+    name: Monitoring
+    version: 1.0.0
