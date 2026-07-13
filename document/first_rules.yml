@@ -1,0 +1,28 @@
+groups:
+  - name: alert_rules
+    rules:
+      - alert: InstanceDown
+        expr: up == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Instance [{{ $labels.instance}}] down"
+          description: "Job [{{ $labels.job }}] of [{{ $labels.instance }}] was down a minute ago."
+
+      - alert: HighCPU
+        expr: process_cpu_usage > 0.9
+        labels:
+          severity: warning
+        annotations:
+          summary: "CPU Usage High"
+          description: 'CPU Usage: {{ printf "%.2f" $value }}'
+
+      - alert: HighHeap
+        expr: 100 * jvm_memory_used_bytes{area="heap"}
+              / jvm_memory_max_bytes{area="heap"} > 90
+        labels:
+          severity: critical
+        annotations:
+          summary: "Heap Memory High"
+          description: 'Heap usage is {{ printf "%.2f" $value }}%'

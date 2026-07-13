@@ -1,0 +1,24 @@
+route:
+  receiver: 'slack'
+
+  # 최초 전송까지 대기
+  group_wait: 5s
+  # 같은 그룹의 새로운 알람 전송 간격
+  group_interval: 10s
+  # 동일 알람 재전송 간격
+  repeat_interval: 30s
+receivers:
+  - name: 'slack'
+    slack_configs:
+      # Slack incoming-webhook api url
+      - api_url: ''
+        channel: '#monitoring'
+        title: "{{ .CommonLabels.alertname }}"
+        text: |
+          *Severity*: {{ .CommonLabels.severity }}
+
+          *Summary*
+          {{ .CommonAnnotations.summary }}
+
+          *Description*
+          {{ .CommonAnnotations.description }}
